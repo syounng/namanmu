@@ -66,7 +66,8 @@ client 1, 2, 3 동시 접속했을 때 client 1이 한 글자만 수정해도 �
 ![스크린샷 2025-06-24 오후 9 31 51](https://github.com/user-attachments/assets/a64f6ad0-4b2c-4a3a-a1ad-66e287934514)
 키보드를 좀만 빨리 치면 이렇게 똑같은 요청이 무한루프된다.
 
-해결 방법은 
+해결 방법은 [commit참고]
+하지만 다른 문제가 발생 : 새로고침 하면 에디터 기존 텍스트가 뜨지 않음
 
 ## 문제
 <img width="757" alt="스크린샷 2025-06-24 오후 5 22 09" src="https://github.com/user-attachments/assets/234bcbf8-f016-48b4-82cc-0d8294f31ad6" />
