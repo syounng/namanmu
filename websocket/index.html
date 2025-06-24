@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>웹소켓 테스트</title>
+</head>
+<body>
+  <h1>웹소켓 채팅 예제</h1>
+  <input id="input" placeholder="메시지를 입력하세요" />
+  <ul id="messages"></ul>
+
+  <script>
+    const socket = new WebSocket('ws://localhost:3000');
+
+    const input = document.getElementById('input');
+    const messages = document.getElementById('messages');
+
+    socket.onmessage = (event) => {
+      const li = document.createElement('li');
+      li.innerText = event.data;
+      messages.appendChild(li);
+    };
+
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        socket.send(input.value);
+        input.value = '';
+      }
+    });
+  </script>
+</body>
+</html>
