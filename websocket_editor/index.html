@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Collaborative Editor</title>
+  <style>
+    #editor { width: 100vw; height: 90vh; }
+  </style>
+  <script src="https://unpkg.com/monaco-editor@0.43.0/min/vs/loader.js"></script>
+</head>
+<body>
+  <div id="editor"></div>
+
+  <script>
+    const socket = new WebSocket("ws://localhost:3001");
+
+    require.config({ paths: { 'vs': 'https://unpkg.com/monaco-editor@0.43.0/min/vs' } });
+    require(["vs/editor/editor.main"], function () {
+      const editor = monaco.editor.create(document.getElementById("editor"), {
+        value: "",
+        language: "javascript",
+        theme: "vs-dark"
+      });
+
+      // 에디터 내용이 변경될 때마다 실행되는 함수
+      editor.onDidChangeModelContent((event) => {
+        const content = editor.getValue();
+        //서버로 변경 내용 전송
+        socket.send(JSON.stringify({ content }));
+      });
+
+      // 다른 사용자의 편집 내용 수신
+      socket.onmessage = (event) => {
+        const msg = JSON.parse(event.data);
+        if (msg.content !== editor.getValue()) {
+          editor.setValue(msg.content);  // 간단히 전체 덮어쓰기
+        }
+      };
+    });
+  </script>
+</body>
+</html>
