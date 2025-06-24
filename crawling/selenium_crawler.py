@@ -28,7 +28,7 @@ def crawl_naver_news_with_selenium(keyword, max_page=5):
     results = []
     for page in range(1, max_page + 1):
         # url을 동적으로 생성
-        url = f"https://search.naver.com/search.naver?where=news&query={keyword}&start={(page - 1) * 10 + 1}"
+        url = f"https://gall.dcinside.com/board/view/?id=leagueoflegends6&no=8063418&exception_mode=recommend&page=1"
 
         # 브라우저를 열고 해당 url에 접속
         driver.get(url)
@@ -37,7 +37,7 @@ def crawl_naver_news_with_selenium(keyword, max_page=5):
         time.sleep(2)
 
         # 뉴스 제목을 찾기 위한 선택자 지정
-        titles = driver.find_elements(By.CSS_SELECTOR, ".sds-comps-text-type-headline1")
+        titles = driver.find_elements(By.CSS_SELECTOR, ".ub-word")
 
         # 뉴스 제목과 링크 출력
         # 몇 번째인지(i)
@@ -45,7 +45,7 @@ def crawl_naver_news_with_selenium(keyword, max_page=5):
         # 링크 주소(title.get_attribute('href'))
         for i, title in enumerate(titles, 1):
             results.append({
-                "제목": title.text,
+                "text": title.text,
             })
             print(f"\"{title.text}\"")
 
@@ -57,4 +57,4 @@ def crawl_naver_news_with_selenium(keyword, max_page=5):
     df.to_csv(f"{keyword}_news.csv", index=False, encoding="utf-8-sig")
 
 if __name__ == "__main__":
-    crawl_naver_news_with_selenium("크래프톤 정글", max_page=3)
+    crawl_naver_news_with_selenium("크래프톤 정글", max_page=1)
