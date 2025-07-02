@@ -8,7 +8,7 @@ jobs:
       - uses: actions/checkout@v3
         with: # checkout에 입력 파라미터 주기
           path: our-source
-      - run: ls -al
-      - run: cat .github/workflows/checkout.yml
+      - run: ls -al our-source
+      - run: cat our-source/.github/workflows/checkout.yml
       
       
